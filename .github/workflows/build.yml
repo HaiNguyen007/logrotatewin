@@ -1,0 +1,24 @@
+name: Build and Upload
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-upload:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: choco install -y file
+      - name: Build
+        run: |
+          cd src
+          make
+      - name: Upload Assets
+        uses: actions/upload-artifact@v2
+        with:
+          name: logrotatewin
+          path: |
+            src/logrotate.exe
